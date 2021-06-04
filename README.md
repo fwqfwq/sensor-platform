@@ -11,6 +11,8 @@ https://github.com/JIMsZHOU/sensor-platform
 this repository
 
 
+#### Slides:
+https://github.com/fwqfwq/sensor-platform/blob/main/akka_slides.pdf
 
 
 #### Steps - for Demo Controller: 
