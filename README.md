@@ -5,10 +5,8 @@
 https://github.com/JIMsZHOU/sensor-platform
 
 #### Updating Rpository: 
-
-
-#### Updating: 
-this repository
+this repository  
+https://github.com/fwqfwq/sensor-platform
 
 
 #### For updates and staged demos, in slides:
