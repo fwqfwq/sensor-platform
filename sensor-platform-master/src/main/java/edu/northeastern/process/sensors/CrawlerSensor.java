@@ -19,6 +19,49 @@ import java.util.TimeZone;
  *
  */
 
-public class CrawlerSensor {
+public class CrawlerSensor extends AbstractSensor {
+
+    public static final class Msg implements SensorCommand { }
+    public static final class Schedule implements SensorCommand { }
+    private int count = 0;
+
+    public static Behavior<SensorCommand> create() { return Behaviors.setup(CrawlerSensor::new); }
+
+    public CrawlerSensor(ActorContext<SensorCommand> context) {
+        super(context);
+    }
+
+    @Override
+    public Receive<SensorCommand> createReceive() {
+        return newReceiveBuilder()
+                .onMessage(Schedule.class, this::onSchdule)
+                .onMessage(Msg.class, this::onUpdate)
+                .build();
+    }
+
+    private Behavior<SensorCommand> onSchdule(Schedule schedule) {
+        createScheduleTask();
+        return this;
+    }
+
+    private Behavior<SensorCommand> onUpdate(Msg msg) {
+        count++;
+        if (count > 10) {
+            ActorManager.getAlertSensor().tell(new AlertSensor.Alert("Crawler sensor received 10+ times message"));
+        }
+        return this;
+    }
+
+    private void createScheduleTask() {
+        ActorManager.getScheduler().createJobSchedule(
+                "crawler scheduler",
+                Adapter.toClassic(ActorManager.getAlertSensor()),
+                new AlertSensor.Alert("schduled message"),
+                Option.apply("Crawler"),
+                "c ? * *",
+                Option.empty(),
+                TimeZone.getDefault()
+        );
+    }
 
 }

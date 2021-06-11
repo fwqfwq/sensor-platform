@@ -86,9 +86,8 @@ public class DemoService {
             }
         }
 
-//         in the end stop the sensor
-        logger.info("end");
-        removeSensor("demo");
+        // in the end stop the sensor
+//        removeSensor("demo");
     }
 
     private boolean createDemo(String data, String email) {

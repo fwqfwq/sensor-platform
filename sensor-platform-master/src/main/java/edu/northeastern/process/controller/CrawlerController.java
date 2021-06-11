@@ -18,13 +18,13 @@ public class CrawlerController {
     public ResponseEntity<String> index() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Content-Type", "application/json");
-        String ans = "{\"message\":\"Web Crawler services\"}";
+        String ans = "{\"\n\nWeb Crawler services..\"}";
         return ResponseEntity.ok().body(ans);
     }
 
-    @RequestMapping(value = "/start", method = RequestMethod.GET)
-    public String crawlerProcess() {
-        service.startProcess();
-        return "start crawler";
-    }
+//    @RequestMapping(value = "/start", method = RequestMethod.GET)
+//    public String crawlerProcess() {
+//        service.startProcess();
+//        return "start crawler";
+//    }
 }

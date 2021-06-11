@@ -18,11 +18,7 @@ import java.util.TimeZone;
  * 2. pass messages to sensor
  * 3. stop sensor
  *
- * lifecycle
- * new:
- * preStart
- * postStop
- *
+ * TODO: this may cause bottleneck issue, need to consider better approach
  */
 public final class SensorManager extends AbstractBehavior<SensorManager.SensorManagerCommand> {
     /*
@@ -57,8 +53,6 @@ public final class SensorManager extends AbstractBehavior<SensorManager.SensorMa
             this.msg = msg;
         }
     }
-
-
     public static final class Schedule implements SensorManagerCommand {
         public String name;
         public String key;
@@ -99,16 +93,6 @@ public final class SensorManager extends AbstractBehavior<SensorManager.SensorMa
                 .onMessage(Schedule.class, this::onSchedule)
                 .onMessage(CancelSchedule.class, this::onCancelSchedule)
                 .build();
-    }
-
-    // TODO: preStart() & postStop()
-    public void preStart() {
-//        System.out.println("Father preStart uid=" + getSelf().path().uid() + ", path=" + getSelf().path() + ", object hash=" + this.hashCode());
-//        getContext().actorOf(Props.create(MyWork.class), "second");
-    }
-
-    public void postStop() {
-
     }
 
     private Behavior<SensorManagerCommand> onAdd(Add cmd) {

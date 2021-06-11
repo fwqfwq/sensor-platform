@@ -1,24 +1,38 @@
 package edu.northeastern.process.beans;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 
-@Table
+@Data
+@Table(name = "crawler")
 @Entity
 public class CrawlerEntity {
+
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private int id;
-    private String data;
-    private boolean success;
-    private String email;
-    // TODO
 
-    public CrawlerEntity(String data, String email) {
-        this.data = data;
+    @Column(name = "url")
+    private String url;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "text")
+    private String text;
+
+
+    private boolean success;
+
+
+    public CrawlerEntity(String url, String title, String text) {
+        this.url = url;
+        this.title = title;
+        this.text = text;
         this.success = false;
-        this.email = email;
     }
 
 
@@ -26,35 +40,4 @@ public class CrawlerEntity {
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
