@@ -80,7 +80,7 @@ public class DemoSensor extends AbstractSensor {
     }
 
     private Behavior<SensorCommand> onLog(Log log) {
-        // TODO: Current approach use Runtime process
+
         // May use jsch to send command to host machine later
         // monitor old.log and find 88
 

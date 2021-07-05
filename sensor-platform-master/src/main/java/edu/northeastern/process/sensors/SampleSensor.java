@@ -61,7 +61,7 @@ public class SampleSensor extends AbstractSensor {
         return this;
     }
 
-    // TODO: extract it to parent class
+
     private void createScheduleTask() {
         ActorManager.getScheduler().createJobSchedule(
                 "demo scheduler",
