@@ -74,7 +74,6 @@ public class DemoService {
                 o.setCnt(o.getCnt() + 1);
                 demoRepo.save(o);
             } else {
-                // TODO: log the number
                 logger.info("random number is **"+random+"**");
             }
 
@@ -87,14 +86,13 @@ public class DemoService {
         }
 
         // in the end stop the sensor
-//        removeSensor("demo");
+        removeSensor("demo");
     }
 
     private boolean createDemo(String data, String email) {
         demoRepo.save(new DemoEntity(data, email));
         return true;
     }
-
     private void listenTable() {
         ActorManager.getSensorManager().tell(new SensorManager.Schedule(
                 "databasedemo",
@@ -118,6 +116,7 @@ public class DemoService {
                 TimeZone.getDefault()
         ));
     }
+
 
     private void initSensor(String key) {
         ActorManager.getSensorManager().tell(new SensorManager.Add(key, DemoSensor.create()));

@@ -17,8 +17,6 @@ import java.util.TimeZone;
  * 1. register sensor
  * 2. pass messages to sensor
  * 3. stop sensor
- *
- * TODO: this may cause bottleneck issue, need to consider better approach
  */
 public final class SensorManager extends AbstractBehavior<SensorManager.SensorManagerCommand> {
     /*

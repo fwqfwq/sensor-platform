@@ -3,6 +3,11 @@ package edu.northeastern.process.beans;
 
 import javax.persistence.*;
 
+/**
+ * Created by F Wu
+ */
+
+
 @Table(name = "crawler")
 @Entity
 public class CrawlerEntity {
@@ -25,6 +30,8 @@ public class CrawlerEntity {
     private String imgUrl;
 
 
+    public CrawlerEntity() { }
+
     public CrawlerEntity(String url, String title, String date, String imgUrl) {
         this.url = url;
         this.title = title;
@@ -32,9 +39,9 @@ public class CrawlerEntity {
         this.imgUrl = imgUrl;
     }
 
-
-    public CrawlerEntity() {
-
+    @Override
+    public String toString() {
+        return "Title: " + this.title + "\nDate: " + this.date;
     }
 
 
@@ -78,8 +85,8 @@ public class CrawlerEntity {
         this.imgUrl = imgUrl;
     }
 
-    @Override
-    public String toString() {
-        return "Title: " + this.title + "\nDate: " + this.date;
+    public boolean isExist() {
+        if(getTitle() != null) return true;
+        return false;
     }
 }

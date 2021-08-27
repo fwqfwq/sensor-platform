@@ -1,6 +1,8 @@
 
-# Akka Sensor Platform Updates
+# Akka Sensor Platform Updates   
 
+Repository: https://github.com/fwqfwq/sensor-platform   
+Cloud Deployment for Demo:      
 
 
 ---
@@ -8,19 +10,24 @@
 
 >This product will create sensors to monitor information (setup by user) during the runtime, give alert when meet the condition given by user.
 
->Powered by ***Akka*** to achieve all monitors and alerts are message driven. This repo is only prototype which means it creates a mocked process and integrate sensors to continue supervise the process.
+>Powered by ***Akka*** to achieve all monitors and alerts are message driven. This repo is only prototype which means it creates a mocked process and integrate sensors to continue supervise the process.  
+
+>
+
+
+--- 
+
+
+
+Define Message that sensor will receive (should implement top type SensorCommand interface)   
+
+<!-- 
+#### Slides 
+https://github.com/fwqfwq/sensor-platform/blob/main/akka_slides.pdf -->
 
 ---
-#### Original Rpository: 
-https://github.com/JIMsZHOU/sensor-platform
+Co-developer: https://github.com/JIMsZHOU/sensor-platform
 
-#### Updating Rpository: 
-this repository  
-https://github.com/fwqfwq/sensor-platform
-
-
-#### For updates and staged demos, in slides:
-https://github.com/fwqfwq/sensor-platform/blob/main/akka_slides.pdf
 
 
 <!-- #### Steps - for Demo Controller: 
@@ -30,4 +37,13 @@ https://github.com/fwqfwq/sensor-platform/blob/main/akka_slides.pdf
 4. run
 5. open: http://localhost:8080/swagger-ui.html
  -->
+
+
+##### Services API
+demo scheduler: /demo
+crawler: /crawler  /crawler/add   
+order: /order
+
+
+
 

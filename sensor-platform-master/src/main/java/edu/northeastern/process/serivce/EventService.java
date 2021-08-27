@@ -24,6 +24,10 @@ import java.util.stream.Collectors;
 /**
  * Created by Jim Z on 12/25/20 17:43
  */
+
+/**
+ * Event Service for event updating on database
+ */
 @Service
 public class EventService {
 

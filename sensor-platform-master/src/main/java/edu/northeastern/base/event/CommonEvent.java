@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public class CommonEvent extends Event{
 
-
     private String message;
     private Map<String, Condition> conditions;
 
@@ -31,9 +30,10 @@ public class CommonEvent extends Event{
         }
     }
 
-    public String getMessage() {
+    public String getMessage()  {
         return message;
     }
+
 
     public void setMessage(String message) {
         this.message = message;
