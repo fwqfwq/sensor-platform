@@ -15,6 +15,7 @@ import edu.northeastern.base.sensor.AbstractSensor;
 import edu.northeastern.base.sensor.SensorCommand;
 import edu.northeastern.process.beans.CrawlerEntity;
 
+
 /**
  * Created by F Wu
  *
@@ -56,6 +57,7 @@ public class CrawlerSensor extends AbstractSensor {
         }
     }
 
+
     @Override
     public Receive<SensorCommand> createReceive() {
         return newReceiveBuilder()
@@ -83,13 +85,12 @@ public class CrawlerSensor extends AbstractSensor {
     private Behavior<SensorCommand> onQuery(Query query) {
         if (query.entity.isExist()) {
             getContext().getLog().warn("crawler database table update success");
-            ActorManager.getScheduler().cancelJob("databasedemo");
+            ActorManager.getScheduler().cancelJob("crawlerDbDemo");
         } else {
             getContext().getLog().info("scheduled check database table");
         }
         return this;
     }
-
 
 
 }

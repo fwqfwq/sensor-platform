@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by F Wu
  */
 
-@Table
+@Table(name = "orders")
 @Entity
 public class OrderEntity {
 
@@ -25,8 +25,8 @@ public class OrderEntity {
     @Column(name = "orderId")
     private String orderId;
 
-    @Column(name = "count")
-    private int count;
+    @Column(name = "amount")
+    private int amount;
 
     @Column(name = "buyerName")
     private String buyerName;
@@ -35,7 +35,7 @@ public class OrderEntity {
     private String buyerId;
 
     @Column(name = "purchaseTime")
-    private Date purchaseTime;
+    private String purchaseTime;
 
     @Column(name = "paymentMethod")
     private String paymentMethod;
@@ -43,11 +43,11 @@ public class OrderEntity {
 
     public OrderEntity() {}
 
-    public OrderEntity(String seriesNumber, String productName, String orderId, int count, String buyerName, String buyerId, Date purchaseTime, String paymentMethod) {
+    public OrderEntity(String seriesNumber, String productName, String orderId, int amount, String buyerName, String buyerId, String purchaseTime, String paymentMethod) {
         this.seriesNumber = seriesNumber;
         this.productName = productName;
         this.orderId = orderId;
-        this.count = count;
+        this.amount = amount;
         this.buyerName = buyerName;
         this.buyerId = buyerId;
         this.purchaseTime = purchaseTime;
@@ -92,12 +92,12 @@ public class OrderEntity {
         this.orderId = orderId;
     }
 
-    public int getCount() {
-        return count;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public String getBuyerName() {
@@ -116,11 +116,11 @@ public class OrderEntity {
         this.buyerId = buyerId;
     }
 
-    public Date getPurchaseTime() {
+    public String getPurchaseTime() {
         return purchaseTime;
     }
 
-    public void setPurchaseTime(Date purchaseTime) {
+    public void setPurchaseTime(String purchaseTime) {
         this.purchaseTime = purchaseTime;
     }
 

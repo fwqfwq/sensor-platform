@@ -1,0 +1,13 @@
+product_name,product_manufacture,series_number,retail_loc,order_id,amount,buyer_name,buyer_id,buyer_loc,purchase_time,payment_method
+ProductD,MfctC,SeRIeSNUmD,loc,209,131,BuyerG,vdzhsfg,loc,23-Jan,pm
+ProductD,MfctC,SeRIeSNUmD,loc,210,6,BuyerG,vdzhsfg,loc,20-Mar,pm
+ProductD,MfctC,SeRIeSNUmD,loc,211,743,BuyerL,asdassweqt,loc,23-Jan,pm
+ProductD,MfctC,SeRIeSNUmD,loc,212,34,BuyerE,szffgshwsgsf,loc,28-Feb,pmE
+ProductE,MfctC,SeRIeSNUmE,loc,213,54,BuyerH,sdgsfvcxzx,loc,19-Mar,pm
+ProductE,MfctC,SeRIeSNUmE,loc,214,3,BuyerA,vxcasfd,locA,15-Jan,pmA
+ProductE,MfctC,SeRIeSNUmE,loc,215,159,BuyerB,aerhdgsdf,locA,17-Feb,pmB
+ProductF,MfctD,SeRIeSNUmF,loc,216,364,BuyerJ,asdavzxcz,loc,13-Apr,pm
+ProductG,MfctE,SeRIeSNUmG,loc,217,326,BuyerJ,asdavzxcz,loc,20-Apr,pm
+ProductG,MfctE,SeRIeSNUmG,loc,218,260,BuyerD,ghstdjreras,locA,30-Apr,pmD
+ProductG,MfctE,SeRIeSNUmG,loc,219,712,BuyerE,szffgshwsgsf,loc,23-May,pmE
+ProductG,MfctE,SeRIeSNUmG,loc,220,265,BuyerD,ghstdjreras,locA,23-Feb,pmD

@@ -1,13 +1,12 @@
 package edu.northeastern.process.serivce;
 
 
-import edu.northeastern.base.condition.CrawlerCondition;
 import edu.northeastern.base.manager.ActorManager;
+import edu.northeastern.base.manager.AlertSensor;
 import edu.northeastern.base.manager.SensorManager;
 import edu.northeastern.process.beans.CrawlerEntity;
 import edu.northeastern.process.dao.CrawlerRepo;
 import edu.northeastern.process.sensors.CrawlerSensor;
-import edu.northeastern.process.sensors.DatabaseSensor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.TimeZone;
 
 /**
@@ -34,48 +34,37 @@ public class CrawlerService {
     @Value("${logging.file.name}")
     private String logfile;
 
+    private String KEY = "crawler";
+    private String ID = "1";
+
 
     private static final Logger logger = LoggerFactory.getLogger(CrawlerService.class);
 
     /*
-    Crawler process procedures:
-        1. Crawl from websites, store data into db
-        2. Repeat Crawler every 5 min
-        3. But only store updated data into db
+    Listen message to trigger crawler.
+    ! Need to customized html parsing service.
+
+    Crawler Process procedures:
+        1. Simulate message sender by do random int (random number from 0-10)
+        2. if number == 5, do crawler 1
+        3. if number == 7, do crawler 2
 
     Sensors function:
-        4. Listen log, if content updated give alert
-        5. Parse the content, if negative give alert
-        6. If run crawler 100 times give alert
+        4. Listen database table, if content updated give alert
     */
 
-    public void startCrawler(String url) throws IOException {
-        logger.info(">>>> starting crawl process... ");
+    /* Need to customized */
+    private void crawlPage(){ }
 
-        // Initiate Crawler Sensor
-        initSensor("crawler", url);
-        listenTable();
-
-        // TODO
-
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        // Demo crawler process from website 'rotten tomato', using JSoup
+    // Demo crawler process 1 from website rotten tomato
+    private void crawlPageDemo1(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
 
         String className = "div.col-sm-8";
         Elements contents = doc.select(className);
 
+        logger.info(">>>> processing crawler 1... ");
 
-        logger.info(">>>> processing... ");
-
-        // Parsing here should be customized..
         for(Element content: contents){
             CrawlerEntity crawlerEntity = new CrawlerEntity();
 
@@ -89,37 +78,88 @@ public class CrawlerService {
         logger.info(">>>> done");
     }
 
+    // Demo crawler process 2 from website imdb
+    private void crawlPageDemo2(String url) throws IOException {
+        Document doc = Jsoup.connect(url).get();
 
+        String className = "li.ipl-simple-list__item";
+        Elements contents = doc.select(className);
 
-    public boolean isExist(String id){
-        CrawlerEntity crawlerEntity = getById(id);
-        return null != crawlerEntity;
+        logger.info(">>>> processing crawler 2... ");
+
+        for(Element content: contents){
+            CrawlerEntity crawlerEntity = new CrawlerEntity();
+
+            crawlerEntity.setTitle(content.select(".compact-news-item").text());
+            crawlerEntity.setDate(content.select("li.compact-news-item__date").text());
+            crawlerEntity.setUrl(content.select("a").attr("href"));
+
+            add(crawlerEntity);
+        }
+        logger.info(">>>> done");
     }
 
-    public CrawlerEntity getById(String id) {
-        return crawlerRepo.findById(id);
+
+
+    public void startCrawler(String url1, String url2) {
+        logger.info(">>>> starting crawl process... ");
+
+        // Initiate crawler sensor and listen func
+        initSensor(KEY, ID);
+        listenTable();
+
+        try {
+            Thread.sleep(5000);
+
+            for (int i = 0; i < 200; i++) {
+                int random = new Random().nextInt(10);
+                logger.info(">>> Signal is " + random);
+                if (random == 5) {
+                    // Call crawler func
+                    crawlPageDemo1(url1);
+                    sensorAlert("No.1 ");
+                }
+                else if(random == 6) {
+                    // Call crawler func
+                    crawlPageDemo2(url2);
+                    sensorAlert("No.2 ");
+                }
+            }
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+
+        // Stop sensor
+        removeSensor(KEY);
     }
 
     public void add(CrawlerEntity crawlerEntity) {
         crawlerRepo.save(crawlerEntity);
     }
 
-    private void initSensor(String key, String url) {
-        ActorManager.getSensorManager().tell(new SensorManager.Add(key, CrawlerSensor.create(url)));
+    private void initSensor(String key, String id) {
+        ActorManager.getSensorManager().tell(new SensorManager.Add(key, CrawlerSensor.create(id)));
     }
 
     private void listenTable() {
         ActorManager.getSensorManager().tell(new SensorManager.Schedule(
-                "crawlerDemo",
-                "crawler",
-                new CrawlerSensor.Update(crawlerRepo.findById("crawler")),
-                "do crawler every 5 min",
-                "0 */5 * ? * *",
+                "crawlerDbDemo",
+                KEY,
+                new CrawlerSensor.Query(crawlerRepo.findById(Integer.parseInt(ID))),
+                "check database every 5 sec",
+                "*/5 * * ? * *",
                 null,
                 TimeZone.getDefault()
         ));
     }
 
+    private void sensorAlert(String msg) {
+        ActorManager.getAlertSensor().tell(new AlertSensor.Alert(msg + "crawler invoked. "));
+    }
 
+    private void removeSensor(String key) {
+        ActorManager.getSensorManager().tell(new SensorManager.Stop(key));
+    }
 
 }

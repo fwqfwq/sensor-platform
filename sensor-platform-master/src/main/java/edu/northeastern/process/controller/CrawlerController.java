@@ -28,15 +28,15 @@ public class CrawlerController {
     @Autowired
     private CrawlerService crawlerService;
 
-    @Autowired
-    private EventService eventService;
-
     @Value("${crawler.table.name}")
     private String tableName;
 
     // Demo url for crawler
-    @Value("${crawler.url}")
-    private String url;
+    @Value("${crawler.demo1.url}")
+    private String url1;
+
+    @Value("${crawler.demo2.url}")
+    private String url2;
 
 
     @RequestMapping(value = "/crawler", method = RequestMethod.GET)
@@ -44,17 +44,17 @@ public class CrawlerController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Content-Type", "application/json");
 
-        return ResponseEntity.ok().body(">>>> Crawler Process....");
+        return ResponseEntity.ok().body(">>>> Welcome to Crawler Service");
     }
 
 
     // Demo url
-    @RequestMapping(value = "/crawler/demo", method = RequestMethod.POST)
-    public ResponseEntity<String> crawlerDemo(@RequestBody EventRequest req) throws IOException, InterruptedException {
+    @RequestMapping(value = "/crawler/demo", method = RequestMethod.GET)
+    public ResponseEntity<String> crawlerDemo() throws IOException, InterruptedException {
 
-        crawlerService.startCrawler(url);
-        eventService.createDatabaseEvent(req);
+        crawlerService.startCrawler(url1, url2);
 
+        // display results, read from database
         String sql = "select * from " + tableName;
         List<Map<String, Object>> list =  jdbcTemplate.queryForList(sql);
 
@@ -62,22 +62,5 @@ public class CrawlerController {
                 .body(list.toString());
     }
 
-
-    @RequestMapping(value = "/crawler/add", method = RequestMethod.POST)
-    public String createEvent(@RequestBody EventRequest req) {
-
-
-
-
-        return eventService.createDatabaseEvent(req);
-    }
-
-
-    @RequestMapping(value = "/crawler/delete/{crawlerID}", method = RequestMethod.GET)
-    public String deleteCrawler(@PathVariable String crawlerID) {
-
-
-        return crawlerService.isExist(crawlerID)?eventService.deleteEvent(crawlerID):"Crawler not exit";
-    }
 
 }
