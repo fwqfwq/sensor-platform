@@ -12,7 +12,7 @@ This product will create sensors to monitor information (setup by user) during t
 
 Powered by ***Akka*** to achieve all monitors and alerts are message driven. This repo is only prototype which means it creates a mocked process and integrate sensors to continue supervise the process.   
 
-Provide several services api for scheduler, crawler, automatically order dispatcher.   
+Provide several services api for scheduler, crawler, automatical order dispatcher.   
 
 ---
 
