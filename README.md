@@ -1,5 +1,5 @@
 
-# Akka Sensor Platform Updates   
+# Akka Sensor Platform  
 
 Repository: https://github.com/fwqfwq/sensor-platform       
 Slides: https://github.com/fwqfwq/sensor-platform/blob/main/akka_slides.pdf    
